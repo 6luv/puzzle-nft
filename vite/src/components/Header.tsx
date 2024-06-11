@@ -9,6 +9,7 @@ import {
 import { Dispatch, FC, SetStateAction } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { JsonRpcSigner, ethers } from "ethers";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   signer: JsonRpcSigner | null;
@@ -16,6 +17,8 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
+  const navigate = useNavigate();
+
   const onClickMetamaskLogin = async () => {
     try {
       if (!window.ethereum) return;
@@ -50,13 +53,21 @@ const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
         Save the SEA
       </Flex>
       <Flex gap={24} display={["none", "none", "flex"]}>
-        <Button variant="link" colorScheme="blue">
+        <Button variant="link" colorScheme="blue" onClick={() => navigate("/")}>
           Home
         </Button>
-        <Button variant="link" colorScheme="blue">
+        <Button
+          variant="link"
+          colorScheme="blue"
+          onClick={() => navigate("/mint")}
+        >
           Mint
         </Button>
-        <Button variant="link" colorScheme="blue">
+        <Button
+          variant="link"
+          colorScheme="blue"
+          onClick={() => navigate("/sale")}
+        >
           Sale
         </Button>
       </Flex>
@@ -103,9 +114,9 @@ const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
             ) : (
               <MenuItem onClick={onClickMetamaskLogin}>Login</MenuItem>
             )}
-            <MenuItem>Home</MenuItem>
-            <MenuItem>Mint</MenuItem>
-            <MenuItem>Sale</MenuItem>
+            <MenuItem onClick={() => navigate("/")}>Home</MenuItem>
+            <MenuItem onClick={() => navigate("/mint")}>Mint</MenuItem>
+            <MenuItem onClick={() => navigate("/sale")}>Sale</MenuItem>
           </MenuList>
         </Menu>
       </Flex>
