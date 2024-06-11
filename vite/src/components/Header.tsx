@@ -6,10 +6,31 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { JsonRpcSigner, ethers } from "ethers";
 
-const Header: FC = () => {
+interface HeaderProps {
+  signer: JsonRpcSigner | null;
+  setSigner: Dispatch<SetStateAction<JsonRpcSigner | null>>;
+}
+
+const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
+  const onClickMetamaskLogin = async () => {
+    try {
+      if (!window.ethereum) return;
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      setSigner(await provider.getSigner());
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onClickMetamaskLogout = () => {
+    setSigner(null);
+  };
+
   return (
     <Flex
       h={16}
@@ -40,9 +61,28 @@ const Header: FC = () => {
         </Button>
       </Flex>
       <Flex w={40} justifyContent="end" display={["none", "none", "flex"]}>
-        <Button variant="link" mr={4}>
-          Login
-        </Button>
+        {signer ? (
+          <Menu>
+            <MenuButton
+              textColor="gray.500"
+              bgColor="white"
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+            >
+              {signer
+                ? `${signer.address.substring(0, 5)}...
+            ${signer.address.substring(signer.address.length - 4)}`
+                : "Menu"}
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={onClickMetamaskLogout}>Logout</MenuItem>
+            </MenuList>
+          </Menu>
+        ) : (
+          <Button variant="link" mr={4} onClick={onClickMetamaskLogin}>
+            Login
+          </Button>
+        )}
       </Flex>
       <Flex display={["flex", "flex", "none"]} mr={4}>
         <Menu>
@@ -52,11 +92,17 @@ const Header: FC = () => {
             as={Button}
             rightIcon={<ChevronDownIcon />}
           >
-            Menu
+            {signer
+              ? `${signer.address.substring(0, 5)}...
+            ${signer.address.substring(signer.address.length - 4)}`
+              : "Menu"}
           </MenuButton>
           <MenuList>
-            <MenuItem>Login</MenuItem>
-            <MenuItem>Logout</MenuItem>
+            {signer ? (
+              <MenuItem onClick={onClickMetamaskLogout}>Logout</MenuItem>
+            ) : (
+              <MenuItem onClick={onClickMetamaskLogin}>Login</MenuItem>
+            )}
             <MenuItem>Home</MenuItem>
             <MenuItem>Mint</MenuItem>
             <MenuItem>Sale</MenuItem>
