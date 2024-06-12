@@ -41,6 +41,7 @@ const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
       borderColor="gray.200"
       alignItems="center"
       justifyContent="space-between"
+      rounded="lg"
     >
       <Flex
         w={36}

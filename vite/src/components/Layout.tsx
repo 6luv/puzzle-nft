@@ -1,11 +1,24 @@
-import { Flex } from "@chakra-ui/react";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { JsonRpcSigner, Contract } from "ethers";
 import { Outlet } from "react-router-dom";
+import { Flex } from "@chakra-ui/react";
 import Header from "./Header";
-import { JsonRpcSigner } from "ethers";
+import mintContractAbi from "../lib/mintContractAbi.json";
+import { mintContractAddress } from "../lib/contractAddress";
+
+export interface OutletContext {
+  signer: JsonRpcSigner | null;
+  mintContract: Contract | null;
+}
 
 const Layout: FC = () => {
   const [signer, setSigner] = useState<JsonRpcSigner | null>(null);
+  const [mintContract, setMintContract] = useState<Contract | null>();
+
+  useEffect(() => {
+    if (!signer) return;
+    setMintContract(new Contract(mintContractAddress, mintContractAbi, signer));
+  }, [signer]);
 
   return (
     <Flex
@@ -21,7 +34,7 @@ const Layout: FC = () => {
     >
       <Header signer={signer} setSigner={setSigner} />
       <Flex flexGrow={1}>
-        <Outlet />
+        <Outlet context={{ signer, mintContract }} />
       </Flex>
     </Flex>
   );
