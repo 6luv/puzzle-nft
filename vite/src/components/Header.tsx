@@ -82,8 +82,10 @@ const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
               rightIcon={<ChevronDownIcon />}
             >
               {signer
-                ? `${signer.address.substring(0, 5)}...
-            ${signer.address.substring(signer.address.length - 4)}`
+                ? `${signer.address.substring(
+                    0,
+                    5
+                  )}...${signer.address.substring(signer.address.length - 4)}`
                 : "Menu"}
             </MenuButton>
             <MenuList>
@@ -105,8 +107,9 @@ const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
             rightIcon={<ChevronDownIcon />}
           >
             {signer
-              ? `${signer.address.substring(0, 5)}...
-            ${signer.address.substring(signer.address.length - 4)}`
+              ? `${signer.address.substring(0, 5)}...${signer.address.substring(
+                  signer.address.length - 4
+                )}`
               : "Menu"}
           </MenuButton>
           <MenuList>
