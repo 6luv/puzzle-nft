@@ -26,6 +26,8 @@ const PuzzleCard: FC<PuzzleCardProps> = ({ index, isMinted }) => {
     getNftMetadata();
   }, []);
 
+  useEffect(() => console.log(nftMetadata), [nftMetadata]);
+
   return (
     <Grid pos="relative" w={[20, 20, 32]} h={[20, 20, 32]}>
       {!isMinted && (
