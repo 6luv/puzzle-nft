@@ -8,8 +8,9 @@ import {
 } from "@chakra-ui/react";
 import { Dispatch, FC, SetStateAction } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { JsonRpcSigner, ethers } from "ethers";
+import { JsonRpcSigner } from "ethers";
 import { Link, useNavigate } from "react-router-dom";
+import { useMetamaskLogin } from "../lib";
 
 interface HeaderProps {
   signer: JsonRpcSigner | null;
@@ -33,17 +34,6 @@ const navLinks = [
 
 const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
   const navigate = useNavigate();
-
-  const onClickMetamaskLogin = async () => {
-    try {
-      if (!window.ethereum) return;
-
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      setSigner(await provider.getSigner());
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const onClickMetamaskLogout = () => {
     setSigner(null);
@@ -103,7 +93,11 @@ const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
             </MenuList>
           </Menu>
         ) : (
-          <Button variant="link" mr={4} onClick={onClickMetamaskLogin}>
+          <Button
+            variant="link"
+            mr={4}
+            onClick={() => useMetamaskLogin(setSigner)}
+          >
             Login
           </Button>
         )}
@@ -126,7 +120,9 @@ const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
             {signer ? (
               <MenuItem onClick={onClickMetamaskLogout}>Logout</MenuItem>
             ) : (
-              <MenuItem onClick={onClickMetamaskLogin}>Login</MenuItem>
+              <MenuItem onClick={() => useMetamaskLogin(setSigner)}>
+                Login
+              </MenuItem>
             )}
             {navLinks.map((v, i) => (
               <MenuItem key={i} onClick={() => navigate(v.path)}>
