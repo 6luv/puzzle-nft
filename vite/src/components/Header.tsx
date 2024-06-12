@@ -9,7 +9,7 @@ import {
 import { Dispatch, FC, SetStateAction } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { JsonRpcSigner, ethers } from "ethers";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   signer: JsonRpcSigner | null;
@@ -58,16 +58,18 @@ const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
       justifyContent="space-between"
       rounded="lg"
     >
-      <Flex
-        w={36}
-        fontWeight="bold"
-        fontSize={20}
-        ml={4}
-        borderRight="2px"
-        borderColor="gray.200"
-      >
-        Save the SEA
-      </Flex>
+      <Link to={"/"}>
+        <Flex
+          w={36}
+          fontWeight="bold"
+          fontSize={20}
+          ml={4}
+          borderRight="2px"
+          borderColor="gray.200"
+        >
+          Save the SEA
+        </Flex>
+      </Link>
       <Flex gap={24} display={["none", "none", "flex"]}>
         {navLinks.map((v, i) => (
           <Button
