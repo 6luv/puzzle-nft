@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Layout from "./components/Layout";
 import Mint from "./pages/Mint";
 import My from "./pages/My";
+import Sale from "./pages/Sale";
 
 const App: FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/mint" element={<Mint />} />
           <Route path="/my" element={<My />} />
+          <Route path="/sale" element={<Sale />} />
         </Route>
       </Routes>
     </BrowserRouter>
