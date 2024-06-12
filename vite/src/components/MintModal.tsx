@@ -32,6 +32,9 @@ const MintModal: FC<MintModalProps> = ({ isOpen, onClose, stsNftMetadata }) => {
               right={4}
               fontSize={20}
               fontWeight="semibold"
+              bgColor="rgba(255, 255, 255, 0.7)"
+              rounded="lg"
+              px={1}
             >
               x{stsNftMetadata?.amount}
             </Text>
