@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { OutletContext } from "../components/Layout";
 import NftCard from "../components/NftCard";
+import { useMetamaskLogin } from "../lib";
 
 const My: FC = () => {
   const [mintedList, setMintedList] = useState<number[]>([]);
