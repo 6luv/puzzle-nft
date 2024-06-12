@@ -62,7 +62,7 @@ const NftCard: FC<NftCardProps> = ({ tokenId, amount }) => {
           alt={`Save the SEA #${tokenId}`}
         />
       </Box>
-      <Text fontSize={[16, 16, 20]} fontWeight="semibold" mt={4}>
+      <Text fontSize={[15, 15, 20]} fontWeight="semibold" mt={4}>
         {`Save the SEA #${tokenId}`}
       </Text>
     </GridItem>
