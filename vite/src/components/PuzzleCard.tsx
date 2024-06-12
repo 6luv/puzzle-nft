@@ -1,36 +1,15 @@
 import { Box, Grid, Image } from "@chakra-ui/react";
-import { FC, useEffect, useState } from "react";
-import axios from "axios";
+import { FC } from "react";
 
 interface PuzzleCardProps {
   index: number;
-  isMinted: boolean;
+  balance: number;
 }
 
-const PuzzleCard: FC<PuzzleCardProps> = ({ index, isMinted }) => {
-  const [nftMetadata, setNftMetadata] = useState<INftMetadata>();
-
-  const getNftMetadata = async () => {
-    try {
-      const response = await axios.get<INftMetadata>(
-        `${import.meta.env.VITE_METADATA_URI}${index + 1}.json`
-      );
-
-      setNftMetadata(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    getNftMetadata();
-  }, []);
-
-  useEffect(() => console.log(nftMetadata), [nftMetadata]);
-
+const PuzzleCard: FC<PuzzleCardProps> = ({ index, balance }) => {
   return (
     <Grid pos="relative" w={[20, 28, 32]} h={[20, 28, 32]}>
-      {!isMinted && (
+      {!balance && (
         <Box
           pos="absolute"
           top={0}
