@@ -27,7 +27,7 @@ const My: FC = () => {
   useEffect(() => console.log(mintedList), [mintedList]);
 
   return (
-    <Flex flexDir="column" w="100%" p={2}>
+    <Flex flexDir="column" w="100%" p={8}>
       <Grid
         templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(4, 1fr)"]}
         gap={8}
