@@ -16,6 +16,21 @@ interface HeaderProps {
   setSigner: Dispatch<SetStateAction<JsonRpcSigner | null>>;
 }
 
+const navLinks = [
+  {
+    name: "Home",
+    path: "/",
+  },
+  {
+    name: "Mint",
+    path: "/mint",
+  },
+  {
+    name: "Sale",
+    path: "/sale",
+  },
+];
+
 const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
   const navigate = useNavigate();
 
@@ -54,23 +69,16 @@ const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
         Save the SEA
       </Flex>
       <Flex gap={24} display={["none", "none", "flex"]}>
-        <Button variant="link" colorScheme="blue" onClick={() => navigate("/")}>
-          Home
-        </Button>
-        <Button
-          variant="link"
-          colorScheme="blue"
-          onClick={() => navigate("/mint")}
-        >
-          Mint
-        </Button>
-        <Button
-          variant="link"
-          colorScheme="blue"
-          onClick={() => navigate("/sale")}
-        >
-          Sale
-        </Button>
+        {navLinks.map((v, i) => (
+          <Button
+            key={i}
+            variant="link"
+            colorScheme="blue"
+            onClick={() => navigate(v.path)}
+          >
+            {v.name}
+          </Button>
+        ))}
       </Flex>
       <Flex w={40} justifyContent="end" display={["none", "none", "flex"]}>
         {signer ? (
@@ -118,9 +126,11 @@ const Header: FC<HeaderProps> = ({ signer, setSigner }) => {
             ) : (
               <MenuItem onClick={onClickMetamaskLogin}>Login</MenuItem>
             )}
-            <MenuItem onClick={() => navigate("/")}>Home</MenuItem>
-            <MenuItem onClick={() => navigate("/mint")}>Mint</MenuItem>
-            <MenuItem onClick={() => navigate("/sale")}>Sale</MenuItem>
+            {navLinks.map((v, i) => (
+              <MenuItem key={i} onClick={() => navigate(v.path)}>
+                {v.name}
+              </MenuItem>
+            ))}
           </MenuList>
         </Menu>
       </Flex>
