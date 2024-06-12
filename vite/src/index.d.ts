@@ -7,3 +7,8 @@ interface INftMetadata {
   description: string;
   image: string;
 }
+
+interface IStsNftMetadata extends INftMetadata {
+  tokenId: number;
+  amount: number;
+}
